@@ -9,6 +9,11 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    var gameScore: SKLabelNode!
+    var score = 0 {
+        didSet(
+        gameScore.text = "Score: \(score)"
+    }
     
     override func didMove(to view: SKView) {
         
