@@ -51,8 +51,15 @@ class GameScene: SKScene {
         let tappedNodes = nodes(at: location)
         
         for node in tappedNodes {
+            guard let whackSlot = node.parent?.parent as? WhackSlot else {
+                continue
+            }
             if node.name == "charFriend"{
+                if !whackSlot.isVisible {continue}
+                if whackSlot.isHit {continue}
                 
+                whackSlot.hit()
+                score -= 5
             }else if node.name == "charEnemy"{
                 
             }
