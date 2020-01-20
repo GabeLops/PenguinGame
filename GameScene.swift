@@ -54,16 +54,20 @@ class GameScene: SKScene {
             guard let whackSlot = node.parent?.parent as? WhackSlot else {
                 continue
             }
-            if node.name == "charFriend"{
-                if !whackSlot.isVisible {continue}
-                if whackSlot.isHit {continue}
-                
-                whackSlot.hit()
-                score -= 5
-            }else if node.name == "charEnemy"{
-                
+              if node.name == "charFriend" {
+                    // they shouldn't have whacked this penguin
+                    score -= 5
+
+                    run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+                } else if node.name == "charEnemy" {
+                    // they should have whacked this one
+                    whackSlot.charNode.xScale = 0.85
+                    whackSlot.charNode.yScale = 0.85
+                    score += 1
+
+                    run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
+                }
             }
-        }
         
 }
     func createSlot(at position: CGPoint) {
