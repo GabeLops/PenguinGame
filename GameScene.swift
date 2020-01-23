@@ -11,6 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     var slots = [WhackSlot]()
     var gameScore: SKLabelNode!
+    var finalScore: SKLabelNode!
     var popupTime = 0.85
     var numRounds = 0
     var score = 0 {
@@ -26,6 +27,9 @@ class GameScene: SKScene {
         background.blendMode = .replace
         background.zPosition = -1
         addChild(background)
+        
+        
+        
         
         gameScore = SKLabelNode(fontNamed: "Chalkduster")
         gameScore.text = "Score: 0"
@@ -94,9 +98,15 @@ class GameScene: SKScene {
         
             
             let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            let final = finalScore
+            finalScore = SKLabelNode(fontNamed: "Chalkduster")
+            finalScore.text = "Score: \(score)"
+            final?.position = CGPoint(x:512, y: 184)
+            final?.zPosition = 1
             gameOver.position = CGPoint(x: 512, y: 384)
             gameOver.zPosition = 1
             addChild(gameOver)
+            addChild(final!)
             run(SKAction.playSoundFileNamed("gameOver.caf", waitForCompletion: false))
 
             return
