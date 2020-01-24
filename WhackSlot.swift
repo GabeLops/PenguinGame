@@ -11,6 +11,8 @@ import UIKit
 
 class WhackSlot: SKNode {
     var charNode: SKSpriteNode!
+    var mudParticles: SKEmitterNode!
+    var smokeEmitter: SKEmitterNode!
     
     var isVisible = false
     var isHit = false
@@ -42,6 +44,11 @@ class WhackSlot: SKNode {
         isVisible = true
         isHit = true
         
+        mudParticles = SKEmitterNode(fileNamed: "mudEmitter.sks")
+        mudParticles?.position = charNode.position
+        mudParticles.run(SKAction.moveBy(x: 0, y: 70, duration: 0.05))
+        addChild(mudParticles!)
+        
         if Int.random(in: 0...2) == 0 {
             charNode.texture = SKTexture(imageNamed: "penguinGood")
             charNode.name = "charFriend"
@@ -70,6 +77,10 @@ class WhackSlot: SKNode {
         let notVisible = SKAction.run {
             [weak self] in self?.isVisible = false
         }
+        smokeEmitter = SKEmitterNode(fileNamed: "smokeEmitter.sks")
+        smokeEmitter?.position = charNode.position
+        smokeEmitter.zPosition = 1
+        addChild(smokeEmitter)
         let sequence = SKAction.sequence([delay,hide,notVisible])
         charNode.run(sequence)
     }
